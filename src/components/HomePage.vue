@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
-    <h1> Welcome to Comboforge!</h1>
-      
+    <h1>Welcome to Comboforge!</h1>
+
     <h1>{{ msg }}</h1>
     <p>
       This is a website for the card game keyforge to accumulate combos and get
@@ -72,7 +72,7 @@ export default {
 
 
   <!-- Add "scoped" attribute to limit CSS to this component only -->
-  <style scoped>
+  <style lang="scss" scoped>
 h3 {
   margin: 40px 0 0;
 }

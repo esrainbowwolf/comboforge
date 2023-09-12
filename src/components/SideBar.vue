@@ -98,7 +98,7 @@ aside {
         transition: 0.2s ease-out;
       }
 
-      & :hover {
+      &:hover {
         .material-icons, .material-symbols-outlined {
           color: var(--primary);
           transform: translatex(0.5re);

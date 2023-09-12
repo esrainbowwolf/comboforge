@@ -1,7 +1,7 @@
 <template>
     <h1> Ranking</h1>
 </template>
-<style scoped>
+<style lang="scss" scoped>
 h3 {
   margin: 40px 0 0;
 }
@@ -17,4 +17,3 @@ a {
   color: #8702a1;
 }
 </style>
-  
