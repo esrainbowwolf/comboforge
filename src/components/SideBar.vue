@@ -30,28 +30,21 @@
         <span class="text">Card List</span>
       </router-link>
     </div>
-
-    <div class="flex"></div>
-    <div class="menu">
-      <router-link class="button" to="/settings">
-        <span class="material-icons">settings</span>
-        <span class="text">Settings</span>
-      </router-link>
-      
-    </div>
+    
   </aside>
 </template>
 
 <script setup>
 import { ref } from "vue";
 
-const is_expanded = ref(localStorage.getItem("is_expanded")==="true");
+const is_expanded = ref(localStorage.getItem("is_expanded") === "true");
 
 const ToggleMenu = () => {
   is_expanded.value = !is_expanded.value;
 
-  localStorage.setItem("is_expanded", is_expanded.value)
+  localStorage.setItem("is_expanded", is_expanded.value);
 };
+
 </script>
 
 <style lang="scss" scoped>
@@ -68,7 +61,7 @@ aside {
 
   transition: 0.2s ease-out;
 
-  .flex{
+  .flex {
     flex: 1 1 0;
   }
 
@@ -92,14 +85,16 @@ aside {
     .menu-toggle {
       transition: 0.2s ease-out;
 
-      .material-icons, .material-symbols-outlined {
+      .material-icons,
+      .material-symbols-outlined {
         font-size: 2rem;
         color: var(--light);
         transition: 0.2s ease-out;
       }
 
       &:hover {
-        .material-icons, .material-symbols-outlined {
+        .material-icons,
+        .material-symbols-outlined {
           color: var(--primary);
           transform: translatex(0.5re);
         }
@@ -107,21 +102,22 @@ aside {
     }
   }
 
-  h3, .button .text{
+  h3,
+  .button .text {
     opacity: 0;
     transition: 0.2s ease-out;
   }
 
   h3 {
-    color: var(--grey);
+    color: var(--gold);
     font-size: 0.875rem;
     margin-bottom: 0.5rem;
     text-transform: uppercase;
   }
 
-  .menu{
+  .menu {
     margin: 0 -1rem;
-    .button{
+    .button {
       display: flex;
       align-items: center;
       text-decoration: none;
@@ -129,26 +125,30 @@ aside {
       padding: 0.5rem 1rem;
       transition: 0.2s ease-out;
 
-      .material-icons, .material-symbols-outlined{
+      .material-icons,
+      .material-symbols-outlined {
         font-size: 2rem;
         color: var(--light);
         transition: 0.2s ease-out;
       }
 
-      .text{
+      .text {
         color: var(--light);
         transition: 0.2s ease-out;
       }
 
-      &:hover, ~&.router-link-exact-active{
+      &:hover,
+      ~ &.router-link-exact-active {
         background-color: var(--dark-alt);
-        
-        .material-icons, .text, .material-symbols-outlined{
+
+        .material-icons,
+        .text,
+        .material-symbols-outlined {
           color: var(--primary);
         }
       }
 
-      &.router-link-exact-active{
+      &.router-link-exact-active {
         border-right: 5px solid var(--primary);
       }
     }
@@ -162,15 +162,17 @@ aside {
         transform: rotate(-180deg);
       }
     }
-    h3, .button .text{
-    opacity: 1;
-  }
-
-  .button{
-    .material-icons, .material-symbols-outlined{
-      margin-right: 1rem;
+    h3,
+    .button .text {
+      opacity: 1;
     }
-  }
+
+    .button {
+      .material-icons,
+      .material-symbols-outlined {
+        margin-right: 1rem;
+      }
+    }
   }
 
   @media (max-width: 768px) {

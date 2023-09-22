@@ -1,8 +1,8 @@
 <template>
-  <div class="app">
+<div class="app">
     <SideBar />
       <router-view />
-    </div>
+</div>
 </template>
 
 <script setup>
