@@ -3,6 +3,7 @@ import Home from '.././components/HomePage.vue'
 import Login from '.././components/LoginPage.vue'
 import Rankings from '.././components/RankingPage.vue'
 import List from '.././components/CardList.vue'
+//import TestPage from '.././components/TestPage.vue'
 const router = createRouter({
     history: createWebHistory(),
     routes:[

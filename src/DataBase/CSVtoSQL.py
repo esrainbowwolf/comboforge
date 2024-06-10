@@ -6,7 +6,11 @@ import numpy as np
 KeyforgeCards = pd.read_csv(
     "C:/Users/video/Desktop/Coding fun/MyWebsites/comboforge/src/DataBase/dok-cards-2023-08-25.csv"
 )
-
+#SQL insert statment
+sql_cards="INSERT INTO cards (name,house,expansion,type,rarity,rawAmber,text,flavor,power,armor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+sql_stats="INSERT INTO stats (cardName, `Creature Protection`, `Creature Protection Max`, `Creature Control`, `Creature Control Max`, `Expected Amber`, `Expected Amber Max`, `Amber Control`, `Amber Control Max`, Other, `Other Max`, Disruption, `Disruption Max`, Recursion, `Recursion Max`, Efficiency, `Efficiency Max`, Power, `Power Max`, `Artifact Control`, `Artifact Control Max`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+sql_ratings="INSERT INTO rating (cardName, aercMax, aercMin, win, loss, synergies, sasTraits) VALUES (?, ?, ?, ?, ?, ?, ?)"
+sql_traits="INSERT INTO traits (cardName, traits) VALUES (?, ?)"
 # Setting first itteration of the tables
 KeyforgeCardsFixed = KeyforgeCards.where(pd.notnull(KeyforgeCards), None)
 KeyforgeCardsActions = KeyforgeCardsFixed[KeyforgeCardsFixed["Type"] == "Action"]
@@ -103,7 +107,7 @@ traitPosition = 0
 print(tempTraitsTable)
 for index, row in tempTraitsTable.iterrows():
     if pd.isna(row["Traits"]):
-        print("None trait found\n")
+        print("None trait found")
     else:
         tempString = row["Traits"]
         tempString.replace(" ", "")
@@ -118,7 +122,7 @@ print("Connecting to db")
 
 try:
     conn = mariadb.connect(
-        user="class", password="Rw2023#24", host="24.107.36.151", port=3306, database="comboforge"
+        user="root", password="Rw2023#24", host="127.0.0.1", port=3306, database="comboforge"
     )
 except mariadb.Error as e:
     print(f"Error connecting to MariaDB Platform: {e}")
@@ -128,32 +132,28 @@ cur = conn.cursor()
 # Start adding data into SQL database and commit after each table added
 for x in range(len(cardTable.axes[0])):
     print("inserting " + str(cardTable.loc[x,:]))
-    cur.execute("INSERT INTO cards (name,house,expansion,type,rarity,rawAmber,text,flavor,power,armor) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                (cardTable['Name'][x], cardTable['House'][x], cardTable['Expansion – #'][x], cardTable['Type'][x], cardTable['Rarity'][x], str(cardTable['Raw Amber'][x]), cardTable['Text'][x], cardTable['Flavor Text'][x]), cardTable['Power'][x], cardTable['Armor'][x])
+    cur.execute(sql_cards, (cardTable['Name'][x], cardTable['House'][x], cardTable['Expansion – #'][x], cardTable['Type'][x], cardTable['Rarity'][x], str(cardTable['Raw Amber'][x]), cardTable['Text'][x], cardTable['Flavor Text'][x], cardTable['Power'][x], cardTable['Armor'][x]))
 
 print("Committing db changes")
 conn.commit()
 
 for x in range(len(statTable.axes[0])):
     print("inserting " + str(statTable.loc[x,:]))
-    cur.execute("INSERT INTO stats (cardName, `Creature Protection`, `Creature Protection Max`, `Creature Control`, `Creature Control Max`, `Expected Amber`, `Expected Amber Max`, `Amber Control`, `Amber Control Max`, Other, `Other Max`, Disruption, `Disruption Max`, Recursion, `Recursion Max`, Efficiency, `Efficiency Max`, Power, `Power Max`, `Artifact Control`, `Artifact Control Max`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                (statTable['Name'][x], statTable['Creature Protection'][x], statTable['Creature Protection Max'][x], statTable['Creature Control'][x], statTable['Creature Control Max'][x], statTable['Expected Amber'][x], statTable['Expected Amber Max'][x], statTable['Amber Control'][x], statTable['Amber Control Max'][x], statTable['Other'][x], statTable['Other Max'][x], statTable['Disruption'][x], statTable['Disruption Max'][x], statTable['Recursion'][x], statTable['Recursion Max'][x], statTable['Efficiency'][x], statTable['Efficiency Max'][x], str(statTable['Effective Power'][x]), statTable['Effective Power Max'][x], statTable['Artifact Control'][x], statTable['Artifact Control Max'][x]))
+    cur.execute(sql_stats, (statTable['Name'][x], statTable['Creature Protection'][x], statTable['Creature Protection Max'][x], statTable['Creature Control'][x], statTable['Creature Control Max'][x], statTable['Expected Amber'][x], statTable['Expected Amber Max'][x], statTable['Amber Control'][x], statTable['Amber Control Max'][x], statTable['Other'][x], statTable['Other Max'][x], statTable['Disruption'][x], statTable['Disruption Max'][x], statTable['Recursion'][x], statTable['Recursion Max'][x], statTable['Efficiency'][x], statTable['Efficiency Max'][x], str(statTable['Effective Power'][x]), statTable['Effective Power Max'][x], statTable['Artifact Control'][x], statTable['Artifact Control Max'][x]))
 
 print("Committing db changes")
 conn.commit()
 
 for x in range(len(ratingTable.axes[0])):
     print("inserting " + str(ratingTable.loc[x,:]))
-    cur.execute("INSERT INTO rating (cardName, aercMax, aercMin, win, loss, synergies, sasTraits) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                (ratingTable['Name'][x], ratingTable['Aerc Max'][x], ratingTable['Aerc Min'][x], str(ratingTable['Wins'][x]), str(ratingTable['Losses'][x]), ratingTable['Synergies'][x], ratingTable['SAS traits'][x]))
+    cur.execute(sql_ratings, (ratingTable['Name'][x], ratingTable['Aerc Max'][x], ratingTable['Aerc Min'][x], str(ratingTable['Wins'][x]), str(ratingTable['Losses'][x]), ratingTable['Synergies'][x], ratingTable['SAS traits'][x]))
 
 print("Committing db changes")
 conn.commit()
-
 for x in range(len(traitsTable)):
     print("inserting " + traitsTable[x][0]+" "+traitsTable[x][1])
     cur.execute(
-        "INSERT INTO traits (cardName, traits) VALUES (?, ?)",
+        sql_traits,
         (
             traitsTable[x][0],
             traitsTable[x][1],

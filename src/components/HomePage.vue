@@ -80,9 +80,6 @@
           >Github</a
         >
       </li>
-      <!-- <li>
-        <a href="https://vuex.vuejs.org" target="_blank" rel="noopener">Twitter (X)</a>
-      </li> -->
       <li>
         <a>My Discord: ESRainbowWolf</a>
       </li>
