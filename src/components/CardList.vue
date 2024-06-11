@@ -23,39 +23,27 @@
     <div class="image-gallery">
       <v-row>
         <v-col>
-          
+          <v-dialog v-model="showModal" max-width="600">
+            <v-card>
+              <v-img :src="selectedImage.src" :alt="selectedImage.alt"></v-img>
+            </v-card>
+          </v-dialog>
 
           <v-dialog v-model="showModal" max-width="600">
             <v-card>
               <v-img :src="selectedImage.src" :alt="selectedImage.alt"></v-img>
             </v-card>
           </v-dialog>
-        </v-col>
-        <v-col>
-        
-          <v-dialog v-model="showModal" max-width="600">
-            <v-card>
-              <v-img :src="selectedImage.src" :alt="selectedImage.alt"></v-img>
-            </v-card>
-          </v-dialog>
-        </v-col>
-        <v-col>
-          <div v-for="(cardName, index) in card_Names"
-            :key="index"
-            @click="openModal(index)">
-            <img :src="getImageUrl(cardName.house, cardName.name, 'png')" :alt="cardName.name" />
-          </div>
-          
-          <!-- <div
+          <div
             v-for="(cardName, index) in card_Names"
             :key="index"
             @click="openModal(index)"
           >
-            <div v-for="(house, index) in card_House" :key="index">
-              <img :src="getImageUrl(house, cardName, 'png')" :alt="cardName" />
-            </div>
-          </div> -->
-
+            <img
+              :src="getImageUrl(cardName.house, cardName.name, 'png')"
+              :alt="cardName.name"
+            />
+          </div>
           <v-dialog v-model="showModal" max-width="600">
             <v-card>
               <v-img :src="selectedImage.src" :alt="selectedImage.alt"></v-img>
@@ -72,9 +60,9 @@ export default {
   data() {
     return {
       card_Names: [
-        {house: "Brobnar", name:"12-punch"},
-        {house: "Dis", name:"arise"},
-        {house: "Ekwidon", name:"trader"},
+        { house: "Brobnar", name: "12-punch" },
+        { house: "Dis", name: "arise" },
+        { house: "Ekwidon", name: "trader" },
         // Add more card names as needed
       ],
       house_Names: [
