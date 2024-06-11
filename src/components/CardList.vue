@@ -74,11 +74,14 @@ export default {
       card_Names: [
         {house: "Brobnar", name:"12-punch"},
         {house: "Dis", name:"arise"},
+        {house: "Ekwidon", name:"trader"},
         // Add more card names as needed
       ],
       house_Names: [
         "Brobnar",
         "Dis",
+        "Geistoid",
+        "Skyborn",
         "Ekwidon",
         "Logos",
         "Mars",
@@ -97,8 +100,8 @@ export default {
   methods: {
     openModal(index) {
       const imageUrl = this.getImageUrl(
-        "Brobnar",
-        this.card_Names[index],
+        this.card_Names[index].house,
+        this.card_Names[index].name,
         "png"
       );
       console.log("Image URL:", imageUrl);
